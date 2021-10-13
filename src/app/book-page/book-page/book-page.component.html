@@ -1,9 +1,61 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col">
+            <ng-template #timeConflictModal let-modal>
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        This Book was updated while you were in edit mode.
+                        <br>
+                    </h4>
+                </div>
+                <div class="d-flex flex-row justify-content-around p-5">
+                    <a type="button" class="btn btn-outline-dark" (click)="modal.close()">Reload Page</a>
+                </div>
+            </ng-template>
+            <ng-template #onDeleteModal let-delModal>
+                <div class="modal-header">
+                    <h3 class="modal-title">Are you sure you want to delete this book?</h3>
+                </div>
+                <div class="d-flex flex-row justify-content-around p-3">
+                    <div>
+                        <button class="btn btn-outline-danger" (click)="delModal.close('no')">No</button>
+                    </div>
+                    <div>
+                        <button class="btn btn-outline-success" (click)="delModal.close('yes')">Yes</button>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #errModal let-errModal>
+                <div class="modal-header">
+                    <h4 class="modal-title text-center">
+                        Error!
+                        <br>
+                        The book you are trying to edit no longer exist
+                    </h4>
+                </div>
+                <div class="d-flex flex-row justify-content-around p-3">
+                    <button class="btn btn-outline-dark" (click)="errModal.close()">
+                        Ok
+                    </button>
+                </div>
+            </ng-template>
+            <ng-template #editConflictModal let-editConflictModal>
+                <div class="modal-header">
+                    <h4 class="modal-title text-center">
+                        Changes will be lost
+                    </h4>
+                </div>
+                <div class="d-flex flex-row justify-content-around p-3">
+                    <button class="btn btn-outline-dark" (click)="editConflictModal.close('yes')">
+                        Ok
+                    </button>
+                    <button class="btn btn-outline-dark" (click)="editConflictModal.close('no')">
+                        Continue Editing
+                    </button>
+                </div>
+            </ng-template>
             <app-book-details [book]="book | async" [genresList]="genres" (onDeleteBook)="handleDeleteBook($event)"
-            (onEnterEditMode)="handleEnterEditMode()" [updateSuccessful]="updateSuccessful"
-                (onEditBook)="handleEditBook($event)">
+                (onEditBook)="handleEditBook($event)" (onCancelEdit)="handleCancelEdit($event)" [stayOnEditMode]="stayOnEditMode">
             </app-book-details>
         </div>
     </div>

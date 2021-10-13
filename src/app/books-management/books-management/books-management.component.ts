@@ -23,9 +23,7 @@ export class BooksManagementComponent implements OnInit {
   constructor(private state: StateService) { }
 
   ngOnInit(): void {
-    if (!this.state.isInitialized()) {
-      this.state.init();
-    }
+    this.state.init();
     this.books = this.state.getBooksList();
     this.genres = this.state.getGenres();
   }
@@ -54,7 +52,10 @@ export class BooksManagementComponent implements OnInit {
     if (!genre) {
       return;
     }
-    this.filterObject = { ...this.filterObject, genres: this.filterObject.genres.filter(g => g !== genre) };
+    this.filterObject = { 
+      ...this.filterObject, 
+      genres: this.filterObject.genres.filter(g => g !== genre) 
+    };
     this.handleFilterEvent(this.filterObject);
   }
 

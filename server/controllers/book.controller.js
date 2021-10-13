@@ -154,33 +154,28 @@ exports.populateDB = async () => {
     },
   };
 
-  axios
-    .request(options)
-    .then(function (response) {
-      const genres = [];
-      response.data.items.forEach(async (item) => {
-        const newBook = {
-          title: item.volumeInfo.title,
-          description: item.volumeInfo.description,
-          author: item.volumeInfo.authors?.length
-            ? item.volumeInfo.authors[0]
-            : "",
-          genre: item.volumeInfo.categories?.length
-            ? item.volumeInfo.categories[0]
-            : "",
-          image: item.volumeInfo.imageLinks.thumbnail,
-        };
-        try {
-          const book = await Book.create(newBook);
-          if (book.genre && !genres.includes(book.genre)) {
-            genres.push(book.genre);
-            const genre = await Genre.create({ name: book.genre });
-          }
-        } catch (err) {
-          console.error(err);
+  axios.request(options).then(function (response) {
+    const genres = [];
+    response.data.items.forEach(async (item) => {
+      const newBook = {
+        title: item.volumeInfo.title,
+        description: item.volumeInfo.description,
+        author: item.volumeInfo.authors?.length ? item.volumeInfo.authors[0] : "",
+        genre: item.volumeInfo.categories?.length ? item.volumeInfo.categories[0] : "",
+        image: item.volumeInfo.imageLinks.thumbnail
+      };
+
+      try {
+        const book = await Book.create(newBook);
+        if (book.genre && !genres.includes(book.genre)) {
+          genres.push(book.genre);
+          const genre = await Genre.create({ name: book.genre });
         }
-      });
-    })
+      } catch (err) {
+        console.error(err);
+      }
+    });
+  })
     .catch((error) => {
       console.error(error);
     });

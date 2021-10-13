@@ -18,8 +18,8 @@
         <div class="col-sm-6">
             <div class="input-group">
                 <span class="input-group-text">Filter By Title</span>
-                <input type="text" class="form-control fit-content" name="filter-input" [(ngModel)]="titleInput"
-                    (keyup)="onFilterByTitle.emit(titleInput)">
+                <input type="text" class="form-control fit-content" name="filter-input" #titleInput
+                    (keyup)="onFilterByTitle.emit(titleInput.value)">
             </div>
         </div>
         <div class="genre-badge-container">

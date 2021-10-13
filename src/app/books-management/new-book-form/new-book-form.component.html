@@ -14,7 +14,6 @@
                 Title is required
             </div>
         </div>
-
         <div class="input-group mt-2">
             <span class="input-group-text">Author:</span>
             <input type="text" name="bookAuthor" class="form-control fit-content" #bookAuthor="ngModel"
@@ -25,7 +24,6 @@
                 Author is required
             </div>
         </div>
-
         <div class="input-group mt-2">
             <span class="input-group-text">Genre</span>
             <select name="bookGenre" class="form-select" #bookGenre="ngModel" [(ngModel)]="genre">
@@ -33,7 +31,6 @@
                 <option *ngFor="let genre of genresList | async">{{ genre.name }}</option>
             </select>
         </div>
-
         <div class="input-group mt-2">
             <span class="input-group-text">Description:</span>
             <textarea type="" class="form-control" name="bookDescription" rows="30" cols="40" #bookDescription="ngModel"
@@ -45,10 +42,8 @@
                 Description is required
             </div>
         </div>
-
         <div class="d-flex flex-row-reverse">
             <button type="submit" class="btn btn-outline-primary mt-2" [disabled]="newBookForm.invalid">Submit</button>
         </div>
     </div>
-
 </form>

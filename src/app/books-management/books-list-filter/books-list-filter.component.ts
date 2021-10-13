@@ -19,8 +19,7 @@ export class BooksListFilterComponent {
   @Output() onFilterByTitle: EventEmitter<FilterEvent> = new EventEmitter<FilterEvent>();
   @Output() onAddGenre: EventEmitter<string> = new EventEmitter<string>();
   @Output() onRemoveGenre: EventEmitter<string> = new EventEmitter<string>();
-
-
+  
   filterByTitle = false;
   titleInput;
 }

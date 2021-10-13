@@ -1,11 +1,6 @@
 const db = require('../models/index');
 const Genre = db.genres;
 
-
-exports.create = (req, res) => {
-    console.log(req.body);
-}
-
 exports.findAll = (req, res) => {
     Genre.findAll().then((genres) => {
         if (!genres) {
