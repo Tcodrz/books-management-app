@@ -16,6 +16,9 @@ export class BookPageComponent implements OnInit, OnDestroy {
   genres: Observable<IGenre[]> = of([]);
   routerSubscription: Subscription;
 
+  timeEnteredToEditMode: number = null;
+  updateSuccessful: boolean = true;
+
   constructor(private state: StateService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
@@ -39,8 +42,21 @@ export class BookPageComponent implements OnInit, OnDestroy {
     })
   }
 
-  handleEditBook(book: IBook): void {
-    this.state.editBook(book);
+  async handleEditBook(book: IBook): Promise<void> {
+    const bookFromDb = await this.state.getOneBook(book.id).toPromise();
+    console.log('book updated at:', Date.parse(bookFromDb.updatedAt));
+    console.log('user entered edit mode: ', this.timeEnteredToEditMode);
+    console.log(Date.parse(bookFromDb.updatedAt) > this.timeEnteredToEditMode);
+    if (Date.parse(bookFromDb.updatedAt) > this.timeEnteredToEditMode) {
+      console.log('TIME CONFLICT');
+    }
+    const success = await this.state.editBook(book);
+    this.updateSuccessful = success;
+  }
+
+  handleEnterEditMode(): void {
+    this.timeEnteredToEditMode = new Date().getTime();
+    console.log(this.timeEnteredToEditMode);
   }
 
 

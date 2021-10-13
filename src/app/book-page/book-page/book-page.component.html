@@ -2,6 +2,7 @@
     <div class="row">
         <div class="col">
             <app-book-details [book]="book | async" [genresList]="genres" (onDeleteBook)="handleDeleteBook($event)"
+            (onEnterEditMode)="handleEnterEditMode()" [updateSuccessful]="updateSuccessful"
                 (onEditBook)="handleEditBook($event)">
             </app-book-details>
         </div>

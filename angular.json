@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "books-inventory-management-app"
+    }
+  },
+  "defaultProject": "books-inventory-management-app",
+  "cli": {
+    "analytics": "6dc44f2d-3e3f-4e8d-aaa8-fb7750ca2ceb"
+  }
 }

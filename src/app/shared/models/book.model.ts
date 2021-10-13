@@ -6,6 +6,7 @@ export interface IBook {
     author: string;
     image: string;
     showDescription: boolean;
+    updatedAt: string;
 }
 
 export interface IGenre {

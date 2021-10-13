@@ -1,20 +1,24 @@
 .book-card-header {
-    justify-content: space-between;
-    align-items: baseline;
+  justify-content: space-between;
+  align-items: baseline;
 }
 
 .book-image {
-    width: fit-content;
-    margin-right: 2rem;
+  width: fit-content;
+  margin-right: 2rem;
 }
 
 .book-description {
-    height: 9.8rem;
+  height: 9.8rem;
 }
 
 .error-message {
-    width: 100%;
-    line-height: 1;
-    padding: 6px;
-    margin-left: 11px;
+  width: 100%;
+  line-height: 1;
+  padding: 6px;
+  margin-left: 11px;
+}
+
+.book-page-btn-group {
+  margin-left: 500px;
 }

@@ -92,19 +92,20 @@ export class StateService {
     }
   }
 
-  async editBook(book: IBook): Promise<void> {
+  async editBook(book: IBook): Promise<boolean> {
     try {
-
       const updatedBook = await this.api.editBook(book).toPromise();
 
       if (!updatedBook) {
         /* Display message saying update failed*/
+        return false;
       } else {
         this._books = this._books.map(book => {
           return book.id === updatedBook.id ? updatedBook : book;
         });
 
         this.updateBookList(this._books);
+        return true;
       }
     } catch (error) {
       console.log(error);
