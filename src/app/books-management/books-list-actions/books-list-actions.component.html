@@ -1,0 +1,9 @@
+<div class="btn-toolbar btn-toolbar-container" role="toolbar">
+    <div class="btn-group me-2" role="group">
+        <button type="button"
+            class="btn btn-sm {{_addNewBookMode ? 'btn-primary' : 'btn-outline-primary'}} no-box-shadow"
+            (click)="_addNewBookMode = addNewBook(_addNewBookMode, onAddNewBook)">
+            Add New Book
+        </button>
+    </div>
+</div>

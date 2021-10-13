@@ -1,38 +1,56 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-const db = require('./models/index');
-const axios = require('axios')``;
-const Book = db.books;
 
 const booksRoutes = require('./routes/books.route');
+const genreRoutes = require('./routes/genres.route');
+const booksController = require('./controllers/book.controller');
 
 const app = express();
-
-const corsOptions = {
-    origin: 'http://localhost:8081'
-};
-
-app.use(cors(corsOptions));
 
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
+app.use(cors());
+
 app.use(morgan('dev'));
 
-db.sequelize.sync({ force: true }).then(() => {
-    console.log('DB dropped and synced');
-}).catch(error => console.error);
+/* DATABASE INTIALIZATION */
+const mysql = require('mysql2/promise');
+const db = require('./models/index');
+const config = require('./env/env');
+
+async function dbInit() {
+    try {
+        const connection = await mysql.createConnection({
+            host: config.host,
+            port: config.port,
+            user: config.username,
+            password: config.password
+        });
+        await connection.query(`CREATE DATABASE IF NOT EXISTS \`${config.dbName}\`;`);
+        await db.sequelize.sync({ force: true });
+        booksController.populateDB();
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+dbInit()
+    .then(() => {
+        console.log('DB synced successfuly');
+    })
+    .catch(error => console.error(error));
+
 
 app.use('/api/books', booksRoutes);
+app.use('/api/genres', genreRoutes);
 
 
-
-app.get(('/'), (req, res) => {
-    res.json({ message: `welcome to my awesome express server!` });
-});
-
+/* Don't Change This
+    The Client is configured to use this port
+*/
 const PORT = process.env.port || 8080;
 
 app.listen(PORT, () => {

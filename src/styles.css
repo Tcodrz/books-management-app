@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
+.form-select {
+    line-height: 1;
+}
+
+.form-control {
+    height: 29px;
+}
+
+.fit-content {
+    height: fit-content;
+}
+
+.no-box-shadow, .no-box-shadow:focus, .no-box-shadow::after, .no-box-shadow:active{
+    box-shadow: none!important;
+}

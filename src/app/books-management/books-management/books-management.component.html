@@ -1,0 +1,22 @@
+<div class="container mt-5">
+    <div class="row align-items-end">
+        <div class="col-sm-4">
+            <app-books-list-actions (onAddNewBook)="toggleShowNewBookForm()">
+            </app-books-list-actions>
+        </div>
+    </div>
+    <div class="row" *ngIf="showNewBookForm">
+        <app-new-book-form [genresList]="genres" (onSubmit)="handleNewBookSubmit($event)"></app-new-book-form>
+    </div>
+    <div class="row align-items-end">
+        <div class="col-sm-12">
+            <app-books-list-filter [genresList]="genres" [filteredGenres]="filterObject.genres"
+                (onAddGenre)="handleAddGenre($event)" (onFilterByTitle)="handleFilterByTitle($event)"
+                (onRemoveGenre)="handleRemoveGenre($event)"></app-books-list-filter>
+        </div>
+    </div>
+    <div class="row">
+        <app-books-list [books]="books" (onDeleteBook)="handleDeleteBook($event)">
+        </app-books-list>
+    </div>
+</div>

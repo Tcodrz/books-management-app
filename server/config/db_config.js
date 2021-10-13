@@ -1,8 +1,10 @@
+const config = require('../env/env');
+
 module.exports = {
-    HOST: 'localhost',
-    USER: 'root',
-    PASSWORD: 'Tomas@42910!',
-    DB: 'booksdb',
+    HOST: config.host,
+    USER: config.username,
+    PASSWORD: config.password,
+    DB: config.dbName,
     dialect: 'mysql',
     pool: {
         max: 5,

@@ -1,0 +1,32 @@
+<form>
+    <div class="row form-group align-items-end mt-2">
+        <div class="col-sm-6">
+            <div class="d-flex genre-select">
+                <div class="input-group">
+                    <span class="input-group-text">Genre</span>
+                    <select #genre name="genres" class="form-select genre-select-input" name="genre-select">
+                        <option selected></option>
+                        <option *ngFor="let genre of genresList | async">{{ genre.name }}</option>
+                    </select>
+                    <button class="btn btn-sm btn-outline-success d-inline no-box-shadow"
+                        (click)="onAddGenre.emit(genre.value)">
+                        Add
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="input-group">
+                <span class="input-group-text">Filter By Title</span>
+                <input type="text" class="form-control fit-content" name="filter-input" [(ngModel)]="titleInput"
+                    (keyup)="onFilterByTitle.emit(titleInput)">
+            </div>
+        </div>
+        <div class="genre-badge-container">
+            <span *ngFor="let genre of filteredGenres" (click)="onRemoveGenre.emit(genre)"
+                class="badge bg-light text-dark d-inline-block p-1 genre-badge">
+                {{ genre }}
+            </span>
+        </div>
+    </div>
+</form>

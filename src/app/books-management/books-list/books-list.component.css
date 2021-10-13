@@ -1,0 +1,8 @@
+.book-title-link {
+    color: initial;
+    text-decoration: none;
+}
+.book-title-link:hover {
+    color: rgb(57, 57, 255);
+    text-decoration: underline;
+}
