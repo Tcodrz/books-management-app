@@ -1,9 +1,9 @@
 /* Please Change these variables to suit your config */
 
-exports.username = "root";
-exports.password = "Tomas@42910!";
+exports.username = "<USERNAME>";
+exports.password = "<PASSWORD>";
 exports.port = 3306;
 exports.host = "localhost";
 exports.dbName = "booksdb";
 
-exports.apiKey = "AIzaSyAOsteuaW5ifVvA_RkLXh0mYs6GLAD6ykc";
+exports.apiKey = "<RAPID_API_KEY>";
