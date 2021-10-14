@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { IBook, IGenre } from './../models/book.model';
+import { IBook } from './../models/book.model';
+import { IGenre } from '../models/genre.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -18,14 +19,16 @@ export class ApiService {
       (`${this.api}/books`)
       .pipe(
         map(x => x.data),
-        tap(books => books.map(book => book.showDescription = false))
+        tap(books => books.map(book => book.showDescription = false)),
+        tap(books => books.map(book => book.genres = book.genre.split('|')))
       );
   }
 
   getOneBook(bookid: number): Observable<IBook> {
     return this.http.get<{ data: IBook }>(`${this.api}/books/${bookid}`)
       .pipe(
-        map(res => res.data)
+        map(res => res.data),
+        tap(book => book.genres = book.genre.split('|'))
       );
   }
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IBook } from '../models/book.model';
 import { FilterEvent } from './../../books-management/books-list-filter/books-list-filter.component';
-import { IGenre } from './../models/book.model';
+import { IGenre } from './../models/genre.interface';
 import { ApiService } from './api.service';
 
 @Injectable({
@@ -68,14 +68,21 @@ export class StateService {
       return;
     }
 
-    const filteredBookList = this._books
-      .filter((book) =>
-        filter.genres.length > 0 ? filter.genres.includes(book.genre) : book
-      )
-      .filter((book) =>
-        book.title.toLowerCase().includes(filter.title.toLowerCase())
-      );
+    let filteredBookList = [];
 
+    this._books.forEach(book => {
+      for (let i = 0; i < filter.genres.length; i++) {
+        if (book.genres.includes(filter.genres[i])) {
+          filteredBookList.push(book);
+        }
+      }
+    });
+
+    filteredBookList = filteredBookList
+      .filter((book) =>
+        filter.title ?
+          book.title.toLowerCase().includes(filter.title.toLowerCase()) : book
+      );
     this.updateBookList(filteredBookList);
   }
 

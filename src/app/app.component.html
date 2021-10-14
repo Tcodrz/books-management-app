@@ -1,1 +1,8 @@
-<router-outlet></router-outlet>
+<nav class="navbar navbar-dark bg-dark books-navbar">
+    <a class="navbar-brand d-inline-block books-nav-link" [routerLink]="['/']"
+        routerLinkActive="router-link-active">Books</a>
+</nav>
+<div class="router">
+
+    <router-outlet></router-outlet>
+</div>

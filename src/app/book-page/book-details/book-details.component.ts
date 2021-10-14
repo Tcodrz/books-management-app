@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { IBook } from 'src/app/shared/models/book.model';
-import { IGenre } from './../../shared/models/book.model';
+import { IGenre } from './../../shared/models/genre.interface';
 
 @Component({
   selector: 'app-book-details',
@@ -11,6 +11,7 @@ import { IGenre } from './../../shared/models/book.model';
 export class BookDetailsComponent {
   @Input() set book(val: IBook) {
     if (val) {
+      console.log(val);
       this.bookCopy = Object.assign(this.bookCopy, val);
       this.bookOriginal = Object.assign(this.bookOriginal, val);
     }

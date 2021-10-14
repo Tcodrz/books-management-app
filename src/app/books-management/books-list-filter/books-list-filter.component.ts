@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { IGenre } from './../../shared/models/book.model';
+import { IGenre } from './../../shared/models/genre.interface';
 
 
 export interface FilterEvent {
@@ -19,7 +19,7 @@ export class BooksListFilterComponent {
   @Output() onFilterByTitle: EventEmitter<FilterEvent> = new EventEmitter<FilterEvent>();
   @Output() onAddGenre: EventEmitter<string> = new EventEmitter<string>();
   @Output() onRemoveGenre: EventEmitter<string> = new EventEmitter<string>();
-  
+
   filterByTitle = false;
   titleInput;
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of, Subscription } from 'rxjs';
-import { IBook, IGenre } from 'src/app/shared/models/book.model';
+import { IBook } from 'src/app/shared/models/book.model';
+import { IGenre } from '../../shared/models/genre.interface';
 import { StateService } from './../../shared/services/state.service';
 import { FilterEvent } from './../books-list-filter/books-list-filter.component';
 
@@ -52,9 +53,9 @@ export class BooksManagementComponent implements OnInit {
     if (!genre) {
       return;
     }
-    this.filterObject = { 
-      ...this.filterObject, 
-      genres: this.filterObject.genres.filter(g => g !== genre) 
+    this.filterObject = {
+      ...this.filterObject,
+      genres: this.filterObject.genres.filter(g => g !== genre)
     };
     this.handleFilterEvent(this.filterObject);
   }

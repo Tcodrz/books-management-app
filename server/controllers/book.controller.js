@@ -2,7 +2,6 @@ const db = require("../models/index");
 const axios = require("axios").default;
 const Book = db.books;
 const Genre = db.genres;
-const Op = db.Sequelize.Op;
 
 /* Create a new book */
 exports.create = (req, res) => {
@@ -142,41 +141,37 @@ exports.delete = async (req, res) => {
   }
 };
 
-/* Populate DB with books from google books api */
+/* Populate DB with books from google books ../assets/MOCK_DATA.json */
 exports.populateDB = async () => {
-  var options = {
-    method: "GET",
-    url: "https://google-books.p.rapidapi.com/volumes",
-    params: { key: require("../env/env").apiKey },
-    headers: {
-      "x-rapidapi-host": "google-books.p.rapidapi.com",
-      "x-rapidapi-key": "b96370f5e1msh3989e92b5612b99p118463jsnd26d5771f365",
-    },
-  };
 
-  axios.request(options).then(function (response) {
-    const genres = [];
-    response.data.items.forEach(async (item) => {
-      const newBook = {
-        title: item.volumeInfo.title,
-        description: item.volumeInfo.description,
-        author: item.volumeInfo.authors?.length ? item.volumeInfo.authors[0] : "",
-        genre: item.volumeInfo.categories?.length ? item.volumeInfo.categories[0] : "",
-        image: item.volumeInfo.imageLinks.thumbnail
-      };
+  const BOOKS = require('../assets/MOCK_DATA.json');
+  const genres = [];
 
-      try {
-        const book = await Book.create(newBook);
-        if (book.genre && !genres.includes(book.genre)) {
-          genres.push(book.genre);
-          const genre = await Genre.create({ name: book.genre });
+  BOOKS.forEach(async (book) => {
+    const bookGenres = book.genre.split('|');
+
+    if (bookGenres) {
+      bookGenres.forEach(genre => {
+        if (!genres.includes(genre)) {
+          genres.push(genre);
         }
-      } catch (err) {
-        console.error(err);
-      }
-    });
+      })
+    }
+
+    book.genres = bookGenres;
+    try {
+      await Book.create(book);
+    } catch (err) {
+      console.error(err);
+    }
+  });
+
+  genres.forEach(async (genre) => {
+    try {
+      await Genre.create({ name: genre });
+    } catch (err) {
+      console.error(err);
+    }
   })
-    .catch((error) => {
-      console.error(error);
-    });
+
 };

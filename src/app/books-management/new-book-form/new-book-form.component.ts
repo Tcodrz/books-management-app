@@ -1,4 +1,5 @@
-import { IBook, IGenre } from './../../shared/models/book.model';
+import { IBook } from './../../shared/models/book.model';
+import { IGenre } from 'src/app/shared/models/genre.interface';
 import { Observable, of } from 'rxjs';
 import { Component, EventEmitter, Output, Input, TemplateRef, ElementRef, ViewRef, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';

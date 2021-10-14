@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BehaviorSubject, Observable, of, Subject, Subscription } from 'rxjs';
 import { IBook } from 'src/app/shared/models/book.model';
-import { IGenre } from './../../shared/models/book.model';
+import { IGenre } from './../../shared/models/genre.interface';
 import { StateService } from './../../shared/services/state.service';
 
 @Component({
@@ -27,9 +27,9 @@ export class BookPageComponent implements OnInit, OnDestroy {
   bookID: number = null;
 
   constructor(
-    private state: StateService, 
-    private route: ActivatedRoute, 
-    private router: Router, 
+    private state: StateService,
+    private route: ActivatedRoute,
+    private router: Router,
     private modalService: NgbModal
   ) { }
 

@@ -2,6 +2,7 @@ export interface IBook {
     id: number;
     title: string;
     description: string;
+    genres: string[];
     genre: string;
     author: string;
     image: string;
@@ -9,7 +10,3 @@ export interface IBook {
     updatedAt: string;
 }
 
-export interface IGenre {
-    id: number;
-    name: string;
-}
