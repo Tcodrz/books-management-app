@@ -1,5 +1,9 @@
 <form>
-    <div class="row form-group align-items-end mt-2">
+    <div class="row d-flex flex-column align-content-center">
+        <h5 class="filter-title">Filter</h5>
+        <span class="filter-line"></span>
+    </div>
+    <div class="row form-group align-items-end">
         <div class="col-sm-6">
             <div class="d-flex genre-select">
                 <div class="input-group">
@@ -17,7 +21,7 @@
         </div>
         <div class="col-sm-6">
             <div class="input-group">
-                <span class="input-group-text">Filter By Title</span>
+                <span class="input-group-text">Title</span>
                 <input type="text" class="form-control fit-content" name="filter-input" #titleInput
                     (keyup)="onFilterByTitle.emit(titleInput.value)">
             </div>

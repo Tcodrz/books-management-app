@@ -34,7 +34,8 @@ export class ApiService {
 
   createNewBook(book: Partial<IBook>): Observable<IBook> {
     return this.http.post<{ data: IBook }>(`${this.api}/books`, book).pipe(
-      map(res => res.data)
+      map(res => res.data),
+      tap(book => book.genres = book.genre.split('|'))
     );
   }
 

@@ -14,7 +14,7 @@ exports.create = (req, res) => {
   const book = {
     title: req.body.title,
     description: req.body.description,
-    genre: req.body.genre,
+    genre: req.body.genres.join('|'),
     author: req.body.author,
   };
 
@@ -87,7 +87,10 @@ exports.update = async (req, res) => {
       });
     }
 
-    const updatedBook = await book.update(req.body);
+    const updatedBook = await book.update({
+      ...req.body,
+      genre: req.body.genres.join('|')
+    });
 
     if (!updatedBook) {
       return res.status(500).json({

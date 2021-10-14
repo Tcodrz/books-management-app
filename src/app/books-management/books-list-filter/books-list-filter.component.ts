@@ -21,5 +21,5 @@ export class BooksListFilterComponent {
   @Output() onRemoveGenre: EventEmitter<string> = new EventEmitter<string>();
 
   filterByTitle = false;
-  titleInput;
+  titleInput = '';
 }

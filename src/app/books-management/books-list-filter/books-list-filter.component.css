@@ -16,5 +16,18 @@
     display: inline-flex;
 }
 
+.filter-title {
+    margin: 0 auto;
+    width: fit-content;
+    color: #8c8c8c;
+}
+
+.filter-line {
+    border-bottom: 1px solid #cbcbcb;
+    width: 85%;
+    margin-bottom: .5rem;
+    margin-top: .5rem;
+}
+
 
 

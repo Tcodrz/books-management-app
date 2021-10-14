@@ -69,8 +69,9 @@ export class BooksManagementComponent implements OnInit {
     const newBook: Partial<IBook> = {
       title: book.title,
       description: book.description,
-      genre: book.genre,
-      author: book.author
+      genres: book.genres,
+      author: book.author,
+      genre: book.genre
     };
     this.state.createNewBook(newBook)
       .then(() => this.showNewBookForm = false)

@@ -1,0 +1,19 @@
+<div class="input-group">
+    <span class="input-group-text fit-content">Genre</span>
+
+    <select class="form-select mb-2" name="bookGenre" #genre="ngModel" [(ngModel)]="current">
+        <option *ngFor="let genre of genreList | async">
+            {{ genre.name }}
+        </option>
+    </select>
+    <button type="button" (click)="onAddGenre.emit(genre.value)"
+        class="btn btn-outline-success no-box-shadow fit-content">
+        Add
+    </button>
+</div>
+<div class="genre-badge-container">
+    <span *ngFor="let genre of selectedGenres" (click)="onRemoveGenre.emit(genre)"
+        class="badge bg-dark text-light d-inline-block p-1 genre-badge">
+        {{ genre }}
+    </span>
+</div>

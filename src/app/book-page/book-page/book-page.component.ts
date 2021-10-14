@@ -25,6 +25,7 @@ export class BookPageComponent implements OnInit, OnDestroy {
   timeStamp: number = null;
   stayOnEditMode = false;
   bookID: number = null;
+  loading = true;
 
   constructor(
     private state: StateService,
@@ -47,13 +48,18 @@ export class BookPageComponent implements OnInit, OnDestroy {
             this.router.navigate(['/']);
           });
         }
-        this.book.next(book);
+        this.updateBook(book);
+        this.loading = false;
       });
     });
   }
 
   ngOnDestroy(): void {
     this.routerSubscription.unsubscribe();
+  }
+
+  private updateBook(book: IBook): void {
+    this.book.next(book);
   }
 
   async handleDeleteBook(bookid: number): Promise<void> {
@@ -87,7 +93,9 @@ export class BookPageComponent implements OnInit, OnDestroy {
       await this.modalService.open(this.timeConflictModal).result
       window.location.reload();
     } else {
-      await this.state.editBook(book);
+      const updatedBook = await this.state.editBook(book);
+      this.updateBook(book);
+      this.timeStamp = new Date().getTime();
     }
   }
 
@@ -105,6 +113,11 @@ export class BookPageComponent implements OnInit, OnDestroy {
     }
 
     for (const key in originalBook) {
+      if (key === 'genres') {
+        if (originalBook.genres.join('|') !== newBook.genres.join('|')) {
+          equal = false;
+        }
+      }
       if (originalBook[key] !== newBook[key]) {
         equal = false;
       }
@@ -114,10 +127,9 @@ export class BookPageComponent implements OnInit, OnDestroy {
       if (result === 'no') {
         this.stayOnEditMode = true;
       } else if (result === 'yes') {
-        this.book.next(book);
+        this.updateBook(book);
       }
     }
   }
-
 
 }

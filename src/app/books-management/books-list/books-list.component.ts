@@ -1,5 +1,5 @@
-import { Observable, of } from 'rxjs';
-import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, DoCheck } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Observable } from 'rxjs';
 import { IBook } from 'src/app/shared/models/book.model';
 
 @Component({

@@ -17,15 +17,26 @@ export class NewBookFormComponent {
   author: string = '';
   description: string = '';
   genre: string = '';
+  genres: string[] = [];
 
-  submit(form: NgForm, event: EventEmitter<object>): void {
+  submit(form: NgForm, genres: string[], event: EventEmitter<object>): void {
     const newBook: Partial<IBook> = {
       title: form.value.bookTitle,
       author: form.value.bookAuthor,
-      genre: form.value.bookGenre,
-      description: form.value.bookDescription
+      genre: genres.join('|'),
+      description: form.value.bookDescription,
+      genres
     };
+
     event.emit(newBook);
+  }
+
+  handleAddGenre(genre: string, list: string[]): string[] {
+    return [...list, genre];
+  }
+
+  handleRemoveGenre(genre: string, list: string[]): string[] {
+    return list.filter(g => g !== genre);
   }
 
 

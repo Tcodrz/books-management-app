@@ -9,9 +9,9 @@ import { IGenre } from './../../shared/models/genre.interface';
   styleUrls: ['./book-details.component.css']
 })
 export class BookDetailsComponent {
+
   @Input() set book(val: IBook) {
     if (val) {
-      console.log(val);
       this.bookCopy = Object.assign(this.bookCopy, val);
       this.bookOriginal = Object.assign(this.bookOriginal, val);
     }
@@ -37,4 +37,19 @@ export class BookDetailsComponent {
   edit(book: Partial<IBook>, event: EventEmitter<Partial<IBook>>): void {
     event.emit(book);
   }
+
+  handleAddGenre(genre: string, book: Partial<IBook>): Partial<IBook> {
+    if (!book.genres.includes(genre)) {
+      book.genres = [...book.genres, genre];
+    }
+    return { ...book };
+  }
+
+  handleRemoveGenre(genre: string, book: Partial<IBook>): Partial<IBook> {
+    if (book.genres.includes(genre)) {
+      book.genres = book.genres.filter(g => g !== genre);
+    }
+    return { ...book };
+  }
+
 }

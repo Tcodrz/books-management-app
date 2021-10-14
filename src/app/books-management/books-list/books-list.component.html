@@ -4,7 +4,8 @@
             <span>
                 <h5 class="d-inline">
                     {{ (i+1) }} |
-                    <a [routerLink]="['/book', book.id]" routerLinkActive="router-link-active" class="book-title-link">
+                    <a type="button" [routerLink]="['/book', book.id]" routerLinkActive="router-link-active"
+                        class="book-title-link">
                         {{ book.title }}
                     </a>
                 </h5>

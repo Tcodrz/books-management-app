@@ -6,8 +6,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./books-list-actions.component.css']
 })
 export class BooksListActionsComponent {
-  _addNewBookMode = false;
   @Output() onAddNewBook: EventEmitter<void> = new EventEmitter<void>();
+  _addNewBookMode = false;
 
   addNewBook(onAddNewBookMode: boolean, event: EventEmitter<void>): boolean {
     event.emit();

@@ -1,94 +1,126 @@
-<div class="mb-2" *ngIf="bookCopy">
-    <a class="btn btn-light" routerLink="/">Back</a>
-</div>
-<div class="card w-auto" *ngIf="bookCopy">
-    <div class="card-header d-flex dlex-row align-items-baseline justify-content-between">
-        <div class="d-flex flex-column">
-            <div>
-                <h5 class="card-title" *ngIf="!editMode">{{ bookCopy.title }}</h5>
-                <div *ngIf="editMode">
-                    <input class="form-control mb-2" type="text" name="bookTitle" #bookTitle="ngModel"
-                        [(ngModel)]="bookCopy.title" required />
+<ng-container *ngIf="bookCopy.id">
+    <ng-template [ngTemplateOutlet]="editMode ? onEditMode : bookDetailsPage"></ng-template>
+</ng-container>
 
-                    <div *ngIf="bookTitle.invalid && (bookTitle.touched || bookTitle.dirty)"
-                        class="alert alert-danger mt-2">
-                        <div *ngIf="bookTitle.errors.required">
-                            Title is required
-                        </div>
+
+<ng-template #bookDetailsPage>
+    <ng-template [ngTemplateOutlet]="backToHome"></ng-template>
+    <div class="card w-auto">
+        <div class="card-header d-flex dlex-row align-items-baseline justify-content-between">
+            <div class="d-flex flex-column">
+                <div>
+                    <h5 class="card-title">{{ bookCopy.title }}</h5>
+                </div>
+                <div class="d-flex flex-column">
+                    <h6>by {{ bookCopy.author }} </h6>
+                    <div>
+                        <span *ngFor="let genre of bookCopy.genres; let i = index">
+                            {{ genre }} {{ i === bookCopy.genres.length - 1 ? null : ' | '}}
+                        </span>
                     </div>
                 </div>
             </div>
-            <div class="d-flex flex-column">
-                <h6 *ngIf="!editMode">by {{ bookCopy.author }} </h6>
-                <div>
-                    <span *ngFor="let genre of bookCopy.genres; let i = index"> {{ genre }} {{ i ===
-                        bookCopy.genres.length
-                        - 1
-                        ? null : ' | '}}
-                    </span>
-                </div>
-                <div *ngIf="editMode" class="d-flex flex-row align-items-baseline">
-                    <input class="form-control mb-2" type="text" name="bookAuthor" #bookAuthor="ngModel"
-                        [(ngModel)]="bookCopy.author" required />
-                    &nbsp;&nbsp;|&nbsp;&nbsp;
-                    <select class="form-select mb-2" name="bookGenre" [value]="bookCopy.genre" #bookGenre="ngModel"
-                        [(ngModel)]="bookCopy.genre">
-                        <option *ngFor="let genre of genresList | async">
-                            {{ genre.name }}
-                        </option>
-                    </select>
-                    <div *ngIf="bookAuthor.invalid && (bookAuthor.touched || bookAuthor.dirty)"
-                        class="alert alert-danger mt-2 error-message">
-                        <div *ngIf="bookAuthor.errors.required">
-                            Author is required
-                        </div>
-                    </div>
+            <div class="btn-toolbar">
+                <div class="btn-group">
+                    <button class="btn btn-outline-warning no-box-shadow"
+                        (click)="editMode = toggleEditMode(editMode) || stayOnEditMode">
+                        Edit
+                    </button>
+                    <button class="btn btn-outline-danger no-box-shadow" (click)="onDeleteBook.emit(bookCopy.id)">
+                        Delete
+                    </button>
                 </div>
             </div>
         </div>
-        <div class="btn-toolbar">
-            <div class="btn-group">
-                <button class="btn btn-outline-warning no-box-shadow"
-                    (click)=" editMode ? onCancelEdit.emit([bookOriginal, bookCopy]) : null; editMode = toggleEditMode(editMode) || stayOnEditMode">
-                    {{ editMode ? "Cancel" : "Edit" }}
-                </button>
-                <button class="btn btn-outline-danger no-box-shadow" (click)="onDeleteBook.emit(bookCopy.id)">
-                    Delete
-                </button>
-                <button class="btn btn-outline-success" *ngIf="editMode" (click)="edit({
-                        id: bookCopy.id,
-                        title: bookCopy.title,
-                        author: bookCopy.author,
-                        genre: bookCopy.genre,
-                        description: bookCopy.description
-                    },onEditBook);editMode = false">
-                    Submit Changes
-                </button>
-            </div>
+        <div class="card-body d-flex flex-row align-items-center">
+            <p class="card-text">
+                {{ bookCopy.description }}
+            </p>
         </div>
     </div>
-    <div class="card-body d-flex flex-row align-items-center">
-        <p class="card-text" *ngIf="!editMode">
-            {{ bookCopy.description }}
-        </p>
-        <div *ngIf="editMode">
+</ng-template>
+
+
+
+<ng-template #onEditMode>
+    <div class="card w-auto">
+        <div class="card-header d-flex dlex-row align-items-baseline justify-content-between">
+            <div class="d-flex flex-column">
+                <div>
+                    <input class="form-control mb-2" type="text" name="bookTitle" #bookTitle="ngModel"
+                        [(ngModel)]="bookCopy.title" required />
+                    <app-form-validation-error *ngIf="bookTitle.errors && (bookTitle.touched || bookTitle.dirty)"
+                        [inputName]="'Title'" [message]="'is required'">
+                    </app-form-validation-error>
+                </div>
+                <div class="d-flex flex-column">
+                    <div class="d-flex flex-row align-items-baseline">
+                        <div>
+                            <input class="form-control mb-2" type="text" name="bookAuthor" #bookAuthor="ngModel"
+                                [(ngModel)]="bookCopy.author" required />
+                        </div>
+                        <div>
+                            <app-form-validation-error
+                                *ngIf="bookAuthor.invalid && (bookAuthor.touched || bookAuthor.dirty)"
+                                [inputName]="'Author'" [message]="'is required'" [inline]="true">
+                            </app-form-validation-error>
+                        </div>
+                        &nbsp;&nbsp;|&nbsp;&nbsp;
+                        <div>
+                            <app-genre-select [genreList]="genresList" [selectedGenres]="bookCopy.genres"
+                                (onAddGenre)="bookCopy = handleAddGenre($event, bookCopy)"
+                                (onRemoveGenre)="bookCopy = handleRemoveGenre($event, bookCopy)">
+                            </app-genre-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ng-template [ngTemplateOutlet]="btnToolBar"></ng-template>
+        </div>
+        <div class="card-body">
             <div>
                 <textarea class="form-control book-description" name="bookDescription"
                     [(ngModel)]="bookCopy.description" #bookDescription="ngModel" cols="80" rows="15" required>
                 </textarea>
             </div>
-            <div *ngIf="bookDescription.invalid &&(bookDescription.touched || bookDescription.dirty)"
-                class="alert alert-danger mt-2">
-                <div *ngIf="bookDescription.errors.required">
-                    Description is required
-                </div>
+            <div class="mt-2">
+                <app-form-validation-error
+                    *ngIf="bookDescription.invalid && (bookDescription.touched || bookDescription.dirty)"
+                    [inputName]="'Description'" [message]="'is required'" [inline]="false">
+                </app-form-validation-error>
             </div>
         </div>
     </div>
-</div>
-<div *ngIf="!bookCopy">
-    <h2>
-        Oops.. We could not find your book.
-        <a routerLink="/">Click here</a> to go back
-    </h2>
-</div>
+</ng-template>
+
+
+<ng-template #btnToolBar>
+    <div class="btn-toolbar">
+        <div class="btn-group">
+            <button class="btn btn-outline-warning no-box-shadow"
+                (click)="onCancelEdit.emit([bookOriginal, bookCopy]); editMode = toggleEditMode(editMode) || stayOnEditMode">
+                Cancel
+            </button>
+            <button class="btn btn-outline-danger no-box-shadow" (click)="onDeleteBook.emit(bookCopy.id)">
+                Delete
+            </button>
+            <button class="btn btn-outline-success" (click)="edit({
+                id: bookCopy.id,
+                title: bookCopy.title,
+                author: bookCopy.author,
+                genre: bookCopy.genre,
+                genres: bookCopy.genres,
+                description: bookCopy.description
+            },onEditBook);editMode = false">
+                Submit Changes
+            </button>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template #backToHome>
+    <div class="mb-2">
+        <a class="btn btn-light" routerLink="/">Back</a>
+    </div>
+</ng-template>

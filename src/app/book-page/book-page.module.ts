@@ -1,3 +1,4 @@
+import { SharedModule } from './../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './../app-routing.module';
 import { NgModule } from '@angular/core';
@@ -12,6 +13,7 @@ import { BookDetailsComponent } from './book-details/book-details.component';
   imports: [
     CommonModule,
     AppRoutingModule,
+    SharedModule,
     FormsModule
   ],
 })

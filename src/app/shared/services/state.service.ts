@@ -70,19 +70,24 @@ export class StateService {
 
     let filteredBookList = [];
 
-    this._books.forEach(book => {
-      for (let i = 0; i < filter.genres.length; i++) {
-        if (book.genres.includes(filter.genres[i])) {
-          filteredBookList.push(book);
-        }
-      }
-    });
+    if (filter.genres.length > 0) {
 
-    filteredBookList = filteredBookList
-      .filter((book) =>
-        filter.title ?
-          book.title.toLowerCase().includes(filter.title.toLowerCase()) : book
+      this._books.forEach(book => {
+        for (let i = 0; i < filter.genres.length; i++) {
+          if (book.genres.includes(filter.genres[i])) {
+            filteredBookList.push(book);
+          }
+        }
+      });
+
+      filteredBookList = filteredBookList.filter((book) =>
+        book.title.toLowerCase().includes(filter.title.toLowerCase())
       );
+    } else {
+      filteredBookList = this._books.filter(book =>
+        book.title.toLowerCase().includes(filter.title.toLowerCase())
+      );
+    }
     this.updateBookList(filteredBookList);
   }
 
@@ -98,19 +103,18 @@ export class StateService {
     }
   }
 
-  async editBook(book: IBook): Promise<boolean> {
+  async editBook(book: IBook): Promise<IBook> {
     try {
       const updatedBook = await this.api.editBook(book).toPromise();
       if (!updatedBook) {
         /* Display message saying update failed*/
-        return false;
       } else {
         this._books = this._books.map((book) => {
           return book.id === updatedBook.id ? updatedBook : book;
         });
 
         this.updateBookList(this._books);
-        return true;
+        return updatedBook;
       }
     } catch (error) {
       console.log(error);
