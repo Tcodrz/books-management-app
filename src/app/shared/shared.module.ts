@@ -1,3 +1,4 @@
+import { StateModule } from './../state/state.module';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -12,6 +13,7 @@ import { GenreSelectComponent } from './components/genre-select/genre-select.com
   imports: [
     CommonModule,
     HttpClientModule,
+    StateModule,
     FormsModule
   ],
   exports: [FormValidationErrorComponent, GenreSelectComponent]

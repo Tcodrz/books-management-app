@@ -1,5 +1,10 @@
+import { BooksState } from './../../state/books/books.reducer';
+import { tap, map } from 'rxjs/operators';
+import { loadBooks, loadGenres } from './../../state/books/books.actions';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { AppState } from 'src/app/state';
 import { IBook } from '../models/book.model';
 import { FilterEvent } from './../../books-management/books-list-filter/books-list-filter.component';
 import { IGenre } from './../models/genre.interface';
@@ -13,22 +18,25 @@ export class StateService {
   private readonly books$: BehaviorSubject<IBook[]> = new BehaviorSubject<IBook[]>([]);
   private readonly genres$: BehaviorSubject<IGenre[]> = new BehaviorSubject<IGenre[]>([]);
   private initialized = false; /* Flag to know if StateService has been initialized */
+  booksFromStore$: Observable<IBook[]> = of([]);
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService, private store: Store<AppState>) { }
 
   private updateBookList(books: IBook[]): void {
     this.books$.next(books);
   }
 
   init(): void {
-    this.initialized = true;
-    this.api.getAllBooks().subscribe((books) => {
-      this._books = books;
+    this.store.dispatch(loadBooks());
+    this.store.dispatch(loadGenres());
+
+    this.store.subscribe((state: AppState) => {
+      this._books = state.books.books;
+      this.genres$.next(state.books.genres);
       this.updateBookList(this._books);
     });
-    this.api.getGenres().subscribe((genres) => {
-      this.genres$.next(genres);
-    });
+
+    this.initialized = true;
   }
 
   isInitialized(): boolean {
