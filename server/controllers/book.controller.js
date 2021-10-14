@@ -1,5 +1,4 @@
 const db = require("../models/index");
-const axios = require("axios").default;
 const Book = db.books;
 const Genre = db.genres;
 
