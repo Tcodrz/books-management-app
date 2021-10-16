@@ -1,7 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { IBook } from 'src/app/shared/models/book.model';
+import { IBook } from 'src/app/shared/models/book.interface';
 import { IGenre } from 'src/app/shared/models/genre.interface';
-import { bookCreated, bookDeleted, bookEdited, booksLoaded, deleteBook, filterBooks, genresLoaded, oneBookLoaded, toggleShowDescription } from './books.actions';
+import { bookCreated, bookEdited, booksLoaded, deleteBook, filterBooks, genresLoaded, oneBookLoaded, toggleShowDescription } from './books.actions';
 import { filterBooksByTitleAndGenre, toggleBookDescription } from './books.utils';
 
 

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { IBook } from 'src/app/shared/models/book.model';
+import { IBook } from 'src/app/shared/models/book.interface';
 import { AppState } from 'src/app/state';
 import { IGenre } from './../../shared/models/genre.interface';
 import { ApiService } from './../../shared/services/api.service';

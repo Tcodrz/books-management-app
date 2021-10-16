@@ -24,9 +24,16 @@
 
 .filter-line {
     border-bottom: 1px solid #cbcbcb;
-    width: 85%;
+    width: 97%;
     margin-bottom: .5rem;
     margin-top: .5rem;
+}
+.filter-line-no-margin {
+    border-bottom: 1px solid #cbcbcb;
+    width: 97%;
+    /* margin-bottom: .5rem;
+    */
+    margin-top: .5rem; 
 }
 
 

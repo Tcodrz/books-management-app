@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IBook } from 'src/app/shared/models/book.model';
+import { IBook } from 'src/app/shared/models/book.interface';
 import { IGenre } from './../../shared/models/genre.interface';
 
 @Component({

@@ -1,6 +1,6 @@
 import { FilterEvent } from './../../books-management/books-list-filter/books-list-filter.component';
 import { IGenre } from 'src/app/shared/models/genre.interface';
-import { IBook } from 'src/app/shared/models/book.model';
+import { IBook } from 'src/app/shared/models/book.interface';
 import { createAction, props } from "@ngrx/store";
 
 

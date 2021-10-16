@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { IBook } from 'src/app/shared/models/book.model';
+import { IBook } from 'src/app/shared/models/book.interface';
 import { AppState } from 'src/app/state';
 import { IGenre } from '../../shared/models/genre.interface';
 import { createBook, filterBooks, loadBooks, loadGenres, toggleShowDescription } from './../../state/books/books.actions';

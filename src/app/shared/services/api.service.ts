@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { IBook } from './../models/book.model';
+import { IBook } from '../models/book.interface';
 import { IGenre } from '../models/genre.interface';
 
 @Injectable({

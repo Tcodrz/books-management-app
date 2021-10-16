@@ -54,7 +54,6 @@ export class BooksEffects {
         ofType(createBook),
         mergeMap((action) => this.api.createNewBook(action.payload)
             .pipe(
-                tap(book => console.log(book)),
                 map((book) => (bookCreated({ payload: book }))),
                 catchError(() => EMPTY)
             ))

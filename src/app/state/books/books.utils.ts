@@ -1,4 +1,4 @@
-import { IBook } from 'src/app/shared/models/book.model';
+import { IBook } from 'src/app/shared/models/book.interface';
 import { FilterEvent } from './../../books-management/books-list-filter/books-list-filter.component';
 
 
@@ -36,6 +36,6 @@ export const toggleBookDescription = (books: IBook[], book: IBook): IBook[] => {
 
     b = { ...b, showDescription: !b.showDescription };
 
-    books = [...books.filter(b => b.id !== book.id)];
+    books = books.filter(b => b.id !== book.id);
     return [...books, b];
 }

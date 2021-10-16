@@ -1,8 +1,7 @@
-import { IBook } from './../../shared/models/book.model';
-import { IGenre } from 'src/app/shared/models/genre.interface';
-import { Observable, of } from 'rxjs';
-import { Component, EventEmitter, Output, Input, TemplateRef, ElementRef, ViewRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { IGenre } from 'src/app/shared/models/genre.interface';
+import { IBook } from '../../shared/models/book.interface';
 
 @Component({
   selector: 'app-new-book-form',
@@ -36,6 +35,9 @@ export class NewBookFormComponent {
   }
 
   handleAddGenre(genre: string, list: string[]): string[] {
+    if (!genre || list.includes(genre)) {
+      return list;
+    }
     return [...list, genre];
   }
 
