@@ -1,5 +1,5 @@
 <div class="list-group mt-2">
-    <div *ngFor="let book of books | async let i = index" class="list-group-item list-group-item-action">
+    <div *ngFor="let book of books; let i = index" class="list-group-item list-group-item-action">
         <div class="d-flex w-100 justify-content-between">
             <span>
                 <h5 class="d-inline">
@@ -28,13 +28,13 @@
                         </span>
                         &nbsp;&nbsp;
                         <a type="button" class="link" *ngIf="book?.description?.length > 99"
-                            (click)="book.showDescription = true">
+                            (click)="onToggleShowDescription.emit(book)">
                             read more
                         </a>
                     </span>
                     <span *ngIf="book.showDescription">
                         {{book.description}}
-                        <a type="button" class="link" (click)="book.showDescription = false">
+                        <a type="button" class="link" (click)="onToggleShowDescription.emit(book)">
                             collapse
                         </a>
                     </span>

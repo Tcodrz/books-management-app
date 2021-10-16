@@ -28,7 +28,7 @@ export class ApiService {
     return this.http.get<{ data: IBook }>(`${this.api}/books/${bookid}`)
       .pipe(
         map(res => res.data),
-        tap(book => book.genres = book.genre.split('|'))
+        tap(book => book ? book.genres = book.genre.split('|') : null)
       );
   }
 
@@ -56,7 +56,8 @@ export class ApiService {
 
   editBook(book: IBook): Observable<IBook> {
     return this.http.post<{ data: IBook }>(`${this.api}/books/${book.id}`, book).pipe(
-      map(res => res.data)
+      map(res => res.data),
+      tap((book) => book.genres = book.genre.split('|'))
     );
   }
 }

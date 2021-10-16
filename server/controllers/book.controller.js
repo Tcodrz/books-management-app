@@ -74,6 +74,7 @@ exports.findOne = async (req, res) => {
 
 /* Update one book */
 exports.update = async (req, res) => {
+  console.log(req.body);
   try {
     const book = await Book.findOne({
       where: {
@@ -174,6 +175,6 @@ exports.populateDB = async () => {
     } catch (err) {
       console.error(err);
     }
-  })
+  });
 
 };

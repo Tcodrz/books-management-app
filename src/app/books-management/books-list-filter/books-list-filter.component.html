@@ -8,9 +8,9 @@
             <div class="d-flex genre-select">
                 <div class="input-group">
                     <span class="input-group-text">Genre</span>
-                    <select #genre name="genres" class="form-select genre-select-input" name="genre-select">
+                    <select #genre class="form-select genre-select-input" name="genre-select">
                         <option selected></option>
-                        <option *ngFor="let genre of genresList | async">{{ genre.name }}</option>
+                        <option *ngFor="let genre of genresList">{{ genre.name }}</option>
                     </select>
                     <button class="btn btn-sm btn-outline-success d-inline no-box-shadow"
                         (click)="onAddGenre.emit(genre.value)">

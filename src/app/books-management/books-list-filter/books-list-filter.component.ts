@@ -14,7 +14,7 @@ export interface FilterEvent {
   styleUrls: ['./books-list-filter.component.css']
 })
 export class BooksListFilterComponent {
-  @Input() genresList: Observable<IGenre[]> = of([]);
+  @Input() genresList: IGenre[] = [];
   @Input() filteredGenres: Observable<string[]>;
   @Output() onFilterByTitle: EventEmitter<FilterEvent> = new EventEmitter<FilterEvent>();
   @Output() onAddGenre: EventEmitter<string> = new EventEmitter<string>();

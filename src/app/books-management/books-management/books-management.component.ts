@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of, Subscription } from 'rxjs';
+import { select, Store } from '@ngrx/store';
 import { IBook } from 'src/app/shared/models/book.model';
+import { AppState } from 'src/app/state';
 import { IGenre } from '../../shared/models/genre.interface';
-import { StateService } from './../../shared/services/state.service';
+import { createBook, filterBooks, loadBooks, loadGenres, toggleShowDescription } from './../../state/books/books.actions';
+import { BooksState } from './../../state/books/books.reducer';
 import { FilterEvent } from './../books-list-filter/books-list-filter.component';
 
 @Component({
@@ -12,25 +14,27 @@ import { FilterEvent } from './../books-list-filter/books-list-filter.component'
 })
 export class BooksManagementComponent implements OnInit {
 
-  books: Observable<IBook[]> = of([]);
-  genres: Observable<IGenre[]> = of([]);
+  books: IBook[] = [];
+  genres: IGenre[] = [];
   showNewBookForm = false;
+  loading = true;
 
   filterObject: FilterEvent = {
     title: '',
     genres: []
   };
 
-  constructor(private state: StateService) { }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    this.state.init();
-    this.books = this.state.getBooksList();
-    this.genres = this.state.getGenres();
-  }
-
-  handleDeleteBook(bookid: number): void {
-    this.state.deleteOneBook(bookid);
+    this.store.dispatch(loadBooks());
+    this.store.dispatch(loadGenres());
+    this.store.pipe(
+      select('books')
+    ).subscribe((state: BooksState) => {
+      this.books = state.filteredBooks;
+      this.genres = state.genres;
+    })
   }
 
   toggleShowNewBookForm(): void {
@@ -38,7 +42,7 @@ export class BooksManagementComponent implements OnInit {
   }
 
   handleFilterEvent(event: FilterEvent): void {
-    this.state.getFilteredBookList(event);
+    this.store.dispatch(filterBooks({ payload: event }));
   }
 
   handleAddGenre(genre: string): void {
@@ -73,9 +77,12 @@ export class BooksManagementComponent implements OnInit {
       author: book.author,
       genre: book.genre
     };
-    this.state.createNewBook(newBook)
-      .then(() => this.showNewBookForm = false)
-      .catch(err => console.error(err));
+    this.store.dispatch(createBook({ payload: newBook }));
+    this.showNewBookForm = false;
+  }
+
+  handleToggleShowDescription(book: IBook): void {
+    this.store.dispatch(toggleShowDescription({ payload: book }));
   }
 
 

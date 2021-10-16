@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { NgModel } from '@angular/forms';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-form-validation-error',

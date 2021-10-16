@@ -1,7 +1,7 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col">
-            <app-book-details [book]="book | async" [genresList]="genres" (onDeleteBook)="handleDeleteBook($event)"
+            <app-book-details [book]="book" [genresList]="genres" (onDeleteBook)="handleDeleteBook()"
                 (onEditBook)="handleEditBook($event)" (onCancelEdit)="handleCancelEdit($event)"
                 [stayOnEditMode]="stayOnEditMode">
             </app-book-details>
@@ -18,7 +18,7 @@
 </ng-container>
 
 
-<ng-template #timeConflictModal let-modal>
+<ng-template #timeConflictModal let-timeConflictModal>
     <div class="modal-header">
         <h4 class="modal-title">
             This Book was updated while you were in edit mode.
@@ -26,7 +26,7 @@
         </h4>
     </div>
     <div class="d-flex flex-row justify-content-around p-5">
-        <a type="button" class="btn btn-outline-dark" (click)="modal.close()">Reload Page</a>
+        <a type="button" class="btn btn-outline-dark" (click)="timeConflictModal.close()">Reload Page</a>
     </div>
 </ng-template>
 

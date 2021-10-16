@@ -1,12 +1,13 @@
 <div class="input-group">
     <span class="input-group-text fit-content">Genre</span>
 
-    <select class="form-select mb-2" name="bookGenre" #genre="ngModel" [(ngModel)]="current">
-        <option *ngFor="let genre of genreList | async">
-            {{ genre.name }}
+    <select class="form-select mb-2" name="bookGenre" #bookGenre>
+        <option></option>
+        <option *ngFor="let genre of genreList">
+            {{ genre }}
         </option>
     </select>
-    <button type="button" (click)="onAddGenre.emit(genre.value)"
+    <button type="button" (click)="onAddGenre.emit(bookGenre.value)"
         class="btn btn-outline-success no-box-shadow fit-content">
         Add
     </button>

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IBook } from 'src/app/shared/models/book.model';
 
@@ -9,4 +9,5 @@ import { IBook } from 'src/app/shared/models/book.model';
 })
 export class BooksListComponent {
   @Input() books: Observable<IBook[]>;
+  @Output() onToggleShowDescription: EventEmitter<IBook> = new EventEmitter<IBook>();
 }

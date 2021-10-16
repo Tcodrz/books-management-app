@@ -15,7 +15,7 @@
                     <h6>by {{ bookCopy.author }} </h6>
                     <div>
                         <span *ngFor="let genre of bookCopy.genres; let i = index">
-                            {{ genre }} {{ i === bookCopy.genres.length - 1 ? null : ' | '}}
+                            {{ genre }} {{ isLast(i, bookCopy.genres.length) }}
                         </span>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                         (click)="editMode = toggleEditMode(editMode) || stayOnEditMode">
                         Edit
                     </button>
-                    <button class="btn btn-outline-danger no-box-shadow" (click)="onDeleteBook.emit(bookCopy.id)">
+                    <button class="btn btn-outline-danger no-box-shadow" (click)="onDeleteBook.emit()">
                         Delete
                     </button>
                 </div>
@@ -47,13 +47,12 @@
         <div class="card-header d-flex dlex-row align-items-baseline justify-content-between">
             <div class="d-flex flex-column">
                 <div>
-                    <input class="form-control mb-2" type="text" name="bookTitle" #bookTitle="ngModel"
+                    <input class="form-control mb-2" type="text" name="title" #bookTitle="ngModel"
                         [(ngModel)]="bookCopy.title" required />
 
                     <app-form-validation-error *ngIf="bookTitle.errors && (bookTitle.touched || bookTitle.dirty)"
                         [inputName]="'Title'" [message]="'is required'">
                     </app-form-validation-error>
-
                 </div>
 
                 <div class="d-flex flex-row align-items-baseline">
@@ -69,7 +68,7 @@
                     </div>
                     &nbsp;&nbsp;|&nbsp;&nbsp;
                     <div>
-                        <app-genre-select [genreList]="genresList" [selectedGenres]="bookCopy.genres"
+                        <app-genre-select [genreList]="_genreList" [selectedGenres]="bookCopy.genres"
                             (onAddGenre)="bookCopy = handleAddGenre($event, bookCopy)"
                             (onRemoveGenre)="bookCopy = handleRemoveGenre($event, bookCopy)">
                         </app-genre-select>
@@ -84,7 +83,7 @@
             <div>
                 <textarea class="form-control book-description" name="bookDescription"
                     [(ngModel)]="bookCopy.description" #bookDescription="ngModel" cols="80" rows="15" required>
-                </textarea>
+                    </textarea>
             </div>
             <div class="mt-2">
                 <app-form-validation-error
@@ -93,6 +92,7 @@
                 </app-form-validation-error>
             </div>
         </div>
+
     </div>
 </ng-template>
 
@@ -101,10 +101,10 @@
     <div class="btn-toolbar">
         <div class="btn-group">
             <button class="btn btn-outline-warning no-box-shadow"
-                (click)="onCancelEdit.emit([bookOriginal, bookCopy]); editMode = toggleEditMode(editMode) || stayOnEditMode">
+                (click)="onCancelEdit.emit(bookCopy); editMode = toggleEditMode(editMode) || stayOnEditMode">
                 Cancel
             </button>
-            <button class="btn btn-outline-danger no-box-shadow" (click)="onDeleteBook.emit(bookCopy.id)">
+            <button class="btn btn-outline-danger no-box-shadow" (click)="onDeleteBook.emit()">
                 Delete
             </button>
             <button class="btn btn-outline-success" (click)="edit({

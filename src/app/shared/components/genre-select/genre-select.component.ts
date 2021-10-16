@@ -1,5 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IGenre } from 'src/app/shared/models/genre.interface';
 
 @Component({
@@ -10,9 +9,8 @@ import { IGenre } from 'src/app/shared/models/genre.interface';
 export class GenreSelectComponent {
 
 
-  @Input() genreList: Observable<IGenre[]>;
+  @Input() genreList: string[];
   @Input() selectedGenres: string[];
   @Output() onAddGenre: EventEmitter<string> = new EventEmitter<string>();
-  @Output() onRemoveGenre: EventEmitter<IGenre> = new EventEmitter<IGenre>();
-  current: Partial<IGenre> = {};
+  @Output() onRemoveGenre: EventEmitter<string> = new EventEmitter<string>();
 }

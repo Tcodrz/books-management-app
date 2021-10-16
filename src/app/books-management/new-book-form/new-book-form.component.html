@@ -23,7 +23,7 @@
             [inputName]="'Author'" [message]="'is required'"></app-form-validation-error>
 
         <div class="mt-2">
-            <app-genre-select [genreList]="genresList" [selectedGenres]="genres"
+            <app-genre-select [genreList]="_genreList" [selectedGenres]="genres"
                 (onAddGenre)="genres = handleAddGenre($event, genres)"
                 (onRemoveGenre)="genres = handleRemoveGenre($event, genres)"></app-genre-select>
         </div>

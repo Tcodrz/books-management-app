@@ -11,7 +11,11 @@ import { NgForm } from '@angular/forms';
 })
 export class NewBookFormComponent {
   @Output() onSubmit: EventEmitter<object> = new EventEmitter<object>();
-  @Input() genresList: Observable<IGenre[]> = of([]);
+  @Input() set genresList(val: IGenre[]) {
+    this._genreList = val.map(g => g.name)
+  };
+
+  _genreList: string[] = [];
 
   title: string = '';
   author: string = '';
